@@ -9,12 +9,14 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+    private Rigidbody2D rb;
 
     private void Awake()
     {
         inputActions = new PlayerInputActions();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void OnEnable()
@@ -31,9 +33,6 @@ public class PlayerController : MonoBehaviour
     {
         moveInput = inputActions.Player.Move.ReadValue<Vector2>();
 
-        Vector3 movement = new Vector3(moveInput.x, moveInput.y, 0f);
-        transform.position += movement * moveSpeed * Time.deltaTime;
-
         if (moveInput.x > 0f)
         {
             spriteRenderer.flipX = false;
@@ -45,5 +44,10 @@ public class PlayerController : MonoBehaviour
 
         bool isMoving = moveInput.sqrMagnitude > 0f;
         animator.SetBool("IsMoving", isMoving);
+    }
+
+    private void FixedUpdate()
+    {
+        rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
     }
 }
