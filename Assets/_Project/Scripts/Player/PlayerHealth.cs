@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using Cinemachine;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -12,10 +13,12 @@ public class PlayerHealth : MonoBehaviour
     private bool isInvincible = false;
     private float invincibilityTimer = 0f;
     private bool isDead = false;
+    private CinemachineImpulseSource impulseSource;
 
     private void Awake()
     {
         currentHealth = maxHealth;
+        impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
     private void Start()
@@ -57,6 +60,7 @@ public class PlayerHealth : MonoBehaviour
 
         currentHealth -= amount;
         UpdateHealthText();
+        impulseSource.GenerateImpulse();
 
         isInvincible = true;
         invincibilityTimer = invincibilityDuration;
@@ -65,6 +69,8 @@ public class PlayerHealth : MonoBehaviour
         {
             Die();
         }
+        impulseSource.GenerateImpulse();
+        Debug.Log("Impulse generated!");
     }
 
     private void Die()
