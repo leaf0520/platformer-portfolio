@@ -19,6 +19,10 @@ public class ScoreManager : MonoBehaviour
 
         Instance = this;
     }
+    public int GetScore()
+    {
+        return currentScore;
+    }
 
     private void Start()
     {

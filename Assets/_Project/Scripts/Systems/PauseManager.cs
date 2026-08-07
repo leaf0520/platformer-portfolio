@@ -22,7 +22,11 @@ public class PauseManager : MonoBehaviour
         pausePanel.SetActive(isPaused);
         Time.timeScale = isPaused ? 0f : 1f;
     }
-
+    public void RetryLevel()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
     public void ResumeGame()
     {
         TogglePause();
