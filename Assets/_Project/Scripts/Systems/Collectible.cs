@@ -4,6 +4,7 @@ public class Collectible : MonoBehaviour
 {
     [SerializeField] private int scoreValue = 10;
     [SerializeField] private GameObject pickupEffectPrefab;
+    [SerializeField] private AudioClip pickupSound;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -14,6 +15,11 @@ public class Collectible : MonoBehaviour
             if (pickupEffectPrefab != null)
             {
                 Instantiate(pickupEffectPrefab, transform.position, Quaternion.identity);
+            }
+
+            if (pickupSound != null)
+            {
+                AudioSource.PlayClipAtPoint(pickupSound, transform.position);
             }
 
             Destroy(gameObject);

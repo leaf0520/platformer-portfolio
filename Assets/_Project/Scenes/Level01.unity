@@ -2210,6 +2210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreValue: 10
   pickupEffectPrefab: {fileID: 1527138636646615789, guid: 893d26131ec227a4ba54bd38effb6335, type: 3}
+  pickupSound: {fileID: 8300000, guid: bfad67c8900bf52419f23061778b851c, type: 3}
 --- !u!58 &1327106545
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2478,6 +2479,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreValue: 10
   pickupEffectPrefab: {fileID: 1527138636646615789, guid: 893d26131ec227a4ba54bd38effb6335, type: 3}
+  pickupSound: {fileID: 8300000, guid: bfad67c8900bf52419f23061778b851c, type: 3}
 --- !u!58 &1542637279
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4181,6 +4183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreValue: 10
   pickupEffectPrefab: {fileID: 1527138636646615789, guid: 893d26131ec227a4ba54bd38effb6335, type: 3}
+  pickupSound: {fileID: 8300000, guid: bfad67c8900bf52419f23061778b851c, type: 3}
 --- !u!58 &2137118250
 CircleCollider2D:
   m_ObjectHideFlags: 0
