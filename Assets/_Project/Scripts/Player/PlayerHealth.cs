@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using TMPro;
 using Cinemachine;
@@ -14,11 +15,13 @@ public class PlayerHealth : MonoBehaviour
     private float invincibilityTimer = 0f;
     private bool isDead = false;
     private CinemachineImpulseSource impulseSource;
+    private SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
         currentHealth = maxHealth;
         impulseSource = GetComponent<CinemachineImpulseSource>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -61,6 +64,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= amount;
         UpdateHealthText();
         impulseSource.GenerateImpulse();
+        StartCoroutine(FlashSprite());
 
         isInvincible = true;
         invincibilityTimer = invincibilityDuration;
@@ -69,8 +73,17 @@ public class PlayerHealth : MonoBehaviour
         {
             Die();
         }
-        impulseSource.GenerateImpulse();
-        Debug.Log("Impulse generated!");
+    }
+
+    private IEnumerator FlashSprite()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            spriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(0.1f);
+            spriteRenderer.color = Color.white;
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     private void Die()
