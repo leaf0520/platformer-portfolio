@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +16,8 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rb;
     private bool isGrounded;
+    private bool wasGrounded;
+    private Vector3 originalScale;
 
     private void Awake()
     {
@@ -22,6 +25,7 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        originalScale = transform.localScale;
     }
 
     private void OnEnable()
@@ -57,7 +61,13 @@ public class PlayerController : MonoBehaviour
     {
         rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
 
+        wasGrounded = isGrounded;
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
+        if (isGrounded && !wasGrounded)
+        {
+            StartCoroutine(SquashStretch(new Vector3(1.2f, 0.8f, 1f), 0.1f));
+        }
     }
 
     private void OnJumpPerformed(InputAction.CallbackContext context)
@@ -65,6 +75,23 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            StartCoroutine(SquashStretch(new Vector3(0.8f, 1.2f, 1f), 0.1f));
         }
+    }
+
+    private IEnumerator SquashStretch(Vector3 targetScale, float duration)
+    {
+        transform.localScale = targetScale;
+
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+            transform.localScale = Vector3.Lerp(targetScale, originalScale, t);
+            yield return null;
+        }
+
+        transform.localScale = originalScale;
     }
 }
